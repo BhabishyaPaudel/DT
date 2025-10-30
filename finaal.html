@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duia Trailblazers - Adventure Travel & Outdoor Academy</title>
+    
+    <!-- Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Inter) --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom Tailwind Configuration --><script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // UPDATED: Changed colors to be more aesthetic and professional
+                        'dt-primary': '#7b472e', // Richer, earthy brown for main brand
+                        'dt-green': '#2f855a',   // Deeper, forest green for Travel
+                        'dt-blue': '#2c5282',    // Deeper, slate blue for Academy
+                        'dt-dark': '#1a202c',    // Darker slate for text for better contrast
+                        'dt-bg': '#f7fafc'      // Slightly cleaner light background
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('https://scontent.fdel29-1.fna.fbcdn.net/v/t1.6435-9/120080001_978835482529072_5390496879208526627_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_ohc=SCequloiTrMQ7kNvwFFGDjc&_nc_oc=AdljpUA_zZr_FV-YJeCAF5GYOCuIETSgLkGD7s6MxLbIJYJ0LlnvZ-zrLsC_1N_61KU&_nc_zt=23&_nc_ht=scontent.fdel29-1.fna&_nc_gid=7XMKRj8fJqeePfM4Z9WwsA&oh=00_AfeoP1llE_0SGBnB0SaI3g4FqA4vwvWZGZ4viOPSlyiTfA&oe=692B044A')",
+                        'travel-hero': "url('https://scontent.fdel29-1.fna.fbcdn.net/v/t1.6435-9/121255848_992614811151139_7451044583508489931_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_ohc=nI_X2onZQDAQ7kNvwEF_2gJ&_nc_oc=AdmlJPVkREXanZrF-t0jhE4eVgliyEreLHzoi2xMoS9c0x-iraHkNXzPDbe1WNzkwO8&_nc_zt=23&_nc_ht=scontent.fdel29-1.fna&_nc_gid=wYDUogKdlo3bi2ZWEMetcQ&oh=00_AfeXqNWNIt4yX5LwrcPIL29j-SHvB7pFIA-MbgYs9YASdQ&oe=692B02BF')",
+                        'academy-hero': "url('https://scontent.fccu2-3.fna.fbcdn.net/v/t51.82787-15/571269627_17926554726154553_1730769390323872080_n.jpg?stp=dst-jpegr_tt6&_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=bVbxrRmkWa4Q7kNvwHTMLpo&_nc_oc=AdnyX2-Dz-irHHKTd0en9_C7evu2VKSl91APK2c2a22kqHz7eWvWkzm5HWIywKTAldA&_nc_zt=23&se=-1&_nc_ht=scontent.fccu2-3.fna&_nc_gid=rmTmQbk4jgFehkoXWR-mEQ&oh=00_AffIJXzLM4BQJ8cefhrSNXbLqJDM4prU6-N-2fcp2fZjkw&oe=69096D1F')"
+                    },
+                    boxShadow: {
+                        'lg-soft': '0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07)',
+                        'xl-soft': '0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.08)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fafc; /* dt-bg */
+            color: #1a202c; /* dt-dark */
+        }
+        
+        /* Page transition styles */
+        .page-content {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            transform-origin: top;
+        }
+        .page-content.hidden {
+            opacity: 0;
+            transform: scale(0.98);
+            display: none; /* Hide element */
+        }
+        
+        /* Active nav link style */
+        .nav-link.active {
+            color: #7b472e; /* dt-primary */
+            font-weight: 600;
+        }
+
+        /* Responsive Hero Section */
+        .hero-section {
+            height: 80vh; /* Default height */
+            min-height: 500px;
+            max-height: 700px;
+        }
+        
+        @media (min-width: 768px) {
+            .hero-section {
+                height: 90vh; /* Taller on larger screens */
+                max-height: 850px;
+            }
+        }
+
+        /* Parallax-style background */
+        .hero-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        /* Modal styles */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none;
+        }
+        .modal-backdrop.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -60%); /* Start slightly higher */
+            z-index: 101;
+            /* UPDATED: Added semi-transparency and blur for aesthetics */
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            /* UPDATED: Softer corners */
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            width: 90%;
+            max-width: 500px; /* 500px max width */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            pointer-events: none;
+        }
+        .modal-backdrop.active .modal-content {
+            transform: translate(-50%, -50%); /* End at center */
+            opacity: 1;
+            pointer-events: all;
+        }
+    </style>
+</head>
+
+<body class="bg-dt-bg text-dt-dark">
+
+    <!-- Header -->
+    <!-- UPDATED: Added transparency and blur for a modern, simple look -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm fixed top-0 left-0 right-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- Logo --><a href="#" class="nav-link" data-page="home">
+                    <img src="https://scontent.fdel29-1.fna.fbcdn.net/v/t39.30808-6/305892691_502400808561742_5483379155533334371_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=OMorgqn3PngQ7kNvwHmYd6a&_nc_oc=Adn5HXp98piqf5k4nj8Fuzk7qVOWa_XA8yZD2kHoLJupu-KR_h3jigo93TIdpZYXJws&_nc_zt=23&_nc_ht=scontent.fdel29-1.fna&_nc_gid=5FafKHyTGHaJ3T_ow5Z2iQ&oh=00_AfdvNjIMKHSWKBgwGZBDtVzLekQM0BIR3Flya_B17rDdTg&oe=69095BEB" alt="Duia Trailblazers Logo" class="h-20 w-auto"> <!-- Set height --></a>
+                
+                <!-- Desktop Navigation --><div class="hidden md:flex items-center space-x-2">
+                    <a href="#" class="nav-link px-4 py-2 text-slate-600 hover:text-dt-primary transition duration-300" data-page="home">Home</a>
+                    <a href="#" class="nav-link px-4 py-2 text-slate-600 hover:text-dt-primary transition duration-300" data-page="travel">Travel Experiences</a>
+                    <a href="#" class="nav-link px-4 py-2 text-slate-600 hover:text-dt-primary transition duration-300" data-page="academy">Academy</a>
+                    <a href="#" class="nav-link px-4 py-2 text-slate-600 hover:text-dt-primary transition duration-300" data-page="about">About</a>
+                    <!-- <a href="#" class="nav-link px-4 py-2 text-slate-600 hover:text-dt-primary transition duration-300" data-page="blog">Blog</a> -->
+                    <!-- UPDATED: Button uses new dt-primary color -->
+                    <a href="#" class="nav-link ml-4 px-6 py-2.5 bg-dt-primary text-white font-semibold rounded-lg shadow-lg-soft hover:bg-opacity-90 transition duration-300" data-page="contact">
+                        Contact
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button --><div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-dt-dark text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+
+            </div>
+        </nav>
+
+        <!-- Mobile Menu --><div id="mobile-menu" class="md:hidden hidden bg-white shadow-xl border-t border-slate-200">
+            <a href="#" class="nav-link block px-6 py-4 text-base text-slate-700 hover:bg-slate-50 hover:text-dt-primary" data-page="home">Home</a>
+            <a href="#" class="nav-link block px-6 py-4 text-base text-slate-700 hover:bg-slate-50 hover:text-dt-primary" data-page="travel">Travel Experiences</a>
+            <a href="#" class="nav-link block px-6 py-4 text-base text-slate-700 hover:bg-slate-50 hover:text-dt-primary" data-page="academy">Academy</a>
+            <a href="#" class="nav-link block px-6 py-4 text-base text-slate-700 hover:bg-slate-50 hover:text-dt-primary" data-page="about">About</a>
+            <!-- <a href="#" class="nav-link block px-6 py-4 text-base text-slate-700 hover:bg-slate-50 hover:text-dt-primary" data-page="blog">Blog</a> -->
+            <a href="#" class="nav-link block px-6 py-4 bg-dt-primary text-white text-center font-semibold rounded-b-lg" data-page="contact">Contact</a>
+        </div>
+    </header>
+
+    <!-- Main Content Area --><main class="pt-20"> 
+        
+        <!-- =========== PAGE: Home =========== --><div id="page-home" class="page-content">
+            
+            <!-- Hero Section --><section class="hero-section hero-bg bg-hero-pattern flex items-center justify-center text-center text-white relative">
+                <div class="absolute inset-0 bg-black opacity-50"></div> <!-- Dark overlay -->
+                <div class="relative z-10 p-6">
+                    <!-- UPDATED: Bolder font for more impact -->
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-8" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">
+                        Explore. Learn. Lead Adventures with Duia Trailblazers.
+                    </h1>
+                    
+                    <!-- UPDATED: Buttons added back in -->
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="#" class="nav-link inline-block px-8 py-4 bg-dt-green text-white text-lg font-semibold rounded-lg shadow-lg-soft hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300" data-page="travel">
+                            Explore Experiences
+                        </a>
+                        <a href="#" class="nav-link inline-block px-8 py-4 bg-dt-blue text-white text-lg font-semibold rounded-lg shadow-lg-soft hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300" data-page="academy">
+                            Join the Academy
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Visual Split Section -->
+            <!-- UPDATED: This section is now first -->
+            <section class="bg-dt-bg py-20 md:py-28">
+                <div class="container mx-auto px-6 lg:px-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
+                        
+                        <!-- Travel Experiences -->
+                        <!-- UPDATED: rounded-2xl and shadow-xl-soft for softer aesthetic -->
+                        <div class="bg-white rounded-2xl shadow-xl-soft overflow-hidden flex flex-col">
+                            <img src="https://scontent.fdel29-1.fna.fbcdn.net/v/t39.30808-6/489382040_1248240453977770_6823388939070151824_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_ohc=MwetgrnQzn4Q7kNvwElNJ6W&_nc_oc=AdmC2BWAjqY_ppd2pMX-VwQTqKYkcg8ydhTlEqO_aHHkehiaeK6tIIremUploCbgM60&_nc_zt=23&_nc_ht=scontent.fdel29-1.fna&_nc_gid=hK_vhGzMpD6elXJhWZk0ow&oh=00_AfdFNeYxHzejSjrq--q3OzYghIm-mbzJG4SQh1c0uTErrg&oe=6909606C" alt="Living Root Bridge" class="w-full h-64 object-cover">
+                            <div class="p-8 flex flex-col flex-grow">
+                                <h3 class="text-3xl font-bold text-dt-green mb-4">Travel Experiences</h3>
+                                <p class="text-lg text-slate-700 mb-6 flex-grow">
+                                    Discover the hidden wonders of Meghalaya. From trekking ancient Living Root Bridges to exploring majestic waterfalls and serene rivers, our eco-friendly tours offer unforgettable adventures.
+                                </p>
+                                <!-- UPDATED: Button uses new dt-green and rounded-lg -->
+                                <a href="#" class="nav-link inline-block text-center px-8 py-3 bg-dt-green text-white text-lg font-semibold rounded-lg shadow-lg-soft hover:bg-opacity-90 transition duration-300" data-page="travel">
+                                    Learn More
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Academy -->
+                        <div class="bg-white rounded-2xl shadow-xl-soft overflow-hidden flex flex-col">
+                            <img src="https://scontent.fccu2-3.fna.fbcdn.net/v/t51.82787-15/571269627_17926554726154553_1730769390323872080_n.jpg?stp=dst-jpegr_tt6&_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=bVbxrRmkWa4Q7kNvwHTMLpo&_nc_oc=AdnyX2-Dz-irHHKTd0en9_C7evu2VKSl91APK2c2a22kqHz7eWvWkzm5HWIywKTAldA&_nc_zt=23&se=-1&_nc_ht=scontent.fccu2-3.fna&_nc_gid=rmTmQbk4jgFehkoXWR-mEQ&oh=00_AffIJXzLM4BQJ8cefhrSNXbLqJDM4prU6-N-2fcp2fZjkw&oe=69096D1F" alt="Adventure Training" class="w-full h-64 object-cover">
+                            <div class="p-8 flex flex-col flex-grow">
+                                <h3 class="text-3xl font-bold text-dt-blue mb-4">The Academy</h3>
+                                <p class="text-lg text-slate-700 mb-6 flex-grow">
+                                    Become a certified outdoor leader. Our academy offers expert-led courses in canyoning, trek leadership, wilderness first aid, and outdoor survival skills.
+                                </p>
+                                <!-- UPDATED: Button uses new dt-blue and rounded-lg -->
+                                <a href="#" class="nav-link inline-block text-center px-8 py-3 bg-dt-blue text-white text-lg font-semibold rounded-lg shadow-lg-soft hover:bg-opacity-90 transition duration-300" data-page="academy">
+                                    Learn More
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Duia Trailblazers (Unified) -->
+            <!-- UPDATED: This section is now second -->
+            <section class="py-20 md:py-28 bg-white">
+                <div class="container mx-auto px-6 lg:px-8 max-w-4xl text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-dt-dark mb-6">About Duia Trailblazers</h2>
+                    <p class="text-lg md:text-xl text-slate-700 leading-relaxed">
+                        Duia Trailblazers is dedicated to crafting immersive travel experiences across Meghalaya while empowering the next generation of adventurers through hands-on training and outdoor education. We blend travel, adventure, culture, and capacity-building to create a sustainable ecosystem for adventure tourism.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Testimonials Section -->
+            <section class="py-20 md:py-28 bg-dt-bg"> <!-- Changed background to dt-bg for contrast -->
+                <div class="container mx-auto px-6 lg:px-8 max-w-5xl">
+                    <h2 class="text-3xl md:text-4xl font-bold text-dt-dark text-center mb-16">What Our Trailblazers Say</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        
+                        <!-- Testimonial 1 (Traveller) -->
+                        <div class="bg-white p-8 rounded-2xl shadow-xl-soft"> <!-- Changed bg to white -->
+                            <i class="fas fa-quote-left text-5xl text-dt-primary opacity-20 mb-4"></i>
+                            <p class="text-lg text-slate-700 leading-relaxed mb-6">
+                                "An absolutely breathtaking experience. The Living Root Bridge trek was magical. The guides from Duia were professional, knowledgeable, and made us feel completely safe. Highly recommend!"
+                            </p>
+                            <div class="flex items-center">
+                                <!-- UPDATED: border-dt-green -->
+                                <img src="https://placehold.co/60x60/a7f3d0/16a34a?text=R" class="w-14 h-14 rounded-full mr-4 border-2 border-dt-green" alt="Reviewer 1">
+                                <div>
+                                    <h4 class="font-bold text-lg text-dt-dark">Rohan Sharma</h4>
+                                    <!-- UPDATED: text-dt-green -->
+                                    <p class="text-sm text-dt-green font-semibold">Traveler, Ryndia Trail</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 2 (Trainee) -->
+                        <div class="bg-white p-8 rounded-2xl shadow-xl-soft"> <!-- Changed bg to white -->
+                            <i class="fas fa-quote-left text-5xl text-dt-primary opacity-20 mb-4"></i>
+                            <p class="text-lg text-slate-700 leading-relaxed mb-6">
+                                "The Trek Leadership course was intense but incredibly rewarding. The instructors are world-class, and I learned so much about safety, navigation, and leadership. I feel confident to lead my own groups now."
+                            </p>
+                            <div class="flex items-center">
+                                <!-- UPDATED: border-dt-blue -->
+                                <img src="https://placehold.co/60x60/bfdbfe/2563eb?text=A" class="w-14 h-14 rounded-full mr-4 border-2 border-dt-blue" alt="Reviewer 2">
+                                <div>
+                                    <h4 class="font-bold text-lg text-dt-dark">Anjali Das</h4>
+                                    <!-- UPDATED: text-dt-blue -->
+                                    <p class="text-sm text-dt-blue font-semibold">Academy Trainee, Trek Leadership</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- =========== PAGE: Travel Experiences =========== --><div id="page-travel" class="page-content hidden">
+            
+            <!-- Travel Hero Section --><section class="hero-section hero-bg bg-travel-hero flex items-center justify-center text-center text-white relative" style="height: 60vh; min-height: 400px;">
+                <div class="absolute inset-0 bg-black opacity-60"></div> <!-- Dark overlay --><div class="relative z-10 p-6">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">
+                        Travel Experiences
+                    </h1>
+                    <p class="text-xl md:text-2xl mt-4 font-light">Adventures in the Abode of Clouds</p>
+                </div>
+            </section>
+
+            <!-- Experiences / Trails Section -->
+            <section class="py-20 md:py-28 bg-dt-bg">
+                <div class="container mx-auto px-6 lg:px-8">
+                    <h2 class="text-3xl md:text-4xl font-bold text-dt-dark text-center mb-16">Our Signature Trails</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        
+                        <!-- Ryndia Trail Card -->
+                        <div class="bg-white rounded-2xl shadow-xl-soft overflow-hidden flex flex-col">
+                            <img src="https://scontent.fccu2-4.fna.fbcdn.net/v/t51.82787-15/565103976_18321520981243215_7920912621559932690_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=127cfc&_nc_ohc=bMVbTQM2NQUQ7kNvwGXoOi-&_nc_oc=AdlXY6Mk2EFCSs0dqUZckjMlQU_H01i8BM99A8HHtNCQq0bsIxYtDV1onA3MtzNfhF8&_nc_zt=23&_nc_ht=scontent.fccu2-4.fna&_nc_gid=JcWnWeF9ozuyoH2M7o1TDg&oh=00_AfdHUOdB8drd5lKTpRPa3gqQKwfcMSkStTg_BZPAivWlrQ&oe=69095E23" alt="Ryndia Trail" class="w-full h-56 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-bold text-dt-dark mb-3">The Ryndia Trail</h3>
+                                <p class="text-slate-700 mb-4 flex-grow">A cultural immersion into the world of Khasi textiles and serene village life, combined with a beautiful river walk.</p>
+                                <!-- UPDATED: bg-dt-green -->
+                                <button class="modal-open-btn mt-4 w-full text-center px-6 py-3 bg-dt-green text-white text-base font-semibold rounded-lg shadow-lg-soft hover:bg-opacity-90 transition duration-300" data-modal="booking" data-title="The Ryndia Trail">
+                                    Book This Trip
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Living Root Bridge Card -->
+                        <div class="bg-white rounded-2xl shadow-xl-soft overflow-hidden flex flex-col">
+                            <img src="https://scontent.fccu2-3.fna.fbcdn.net/v/t39.30808-6/489344991_1248240367311112_4080568250188915207_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=gyI-dmUIBhwQ7kNvwE6q7r4&_nc_oc=AdkAKumxbb1PEE-e-ioqAHYNakMx_V_X4Uietn82E1R21WmUBalPRXk3I0AFkYVjedA&_nc_zt=23&_nc_ht=scontent.fccu2-3.fna&_nc_gid=C8kOrPDPddzIsdHyWQRVMg&oh=00_AfdyyQVcSOHfS8k4z6yHByG5godxabCCoI1mJGoVJwPOrA&oe=69094288" alt="Living Root Bridge" class="w-full h-56 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-bold text-dt-dark mb-3">Living Root Bridge Trek</h3>
+                                <p class="text-slate-700 mb-4 flex-grow">Hike down to the iconic double-decker root bridges of Nongriat, a marvel of bio-engineering by the Khasi tribes.</p>
+                                <!-- UPDATED: bg-dt-green -->
+                                <button class="modal-open-btn mt-4 w-full text-center px-6 py-3 bg-dt-green text-white text-base font-semibold rounded-lg shadow-lg-soft hover:bg-opacity-90 transition duration-300" data-modal="booking" data-title="Living Root Bridge Trek">
+                                    Book This Trip
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Canyoning Card -->
+                        <div class="bg-white rounded-2xl shadow-xl-soft overflow-hidden flex flex-col">
+                            <img src="https://scontent.fccu2-4.fna.fbcdn.net/v/t51.82787-15/568947178_18322357828243215_5327034925094668262_n.jpg?stp=dst-jpegr_tt6&_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=SKbhoUeLNdoQ7kNvwEjOG4o&_nc_oc=Adnv_nbp2bQ-ADJbkqXF_0mE_xTNHBv6sh2DAOOasUNwazAIztX3bVAev97OX6lPzUE&_nc_zt=23&se=-1&_nc_ht=scontent.fccu2-4.fna&_nc_gid=pFFyDLiTtuzS0Cnc7-XSsw&oh=00_AfdC4-PVWt3veCIlfW1Iz9iNqBecqbcK0F82PtDXDA3EWQ&oe=69095058" alt="Canyoning" class="w-full h-56 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-bold text-dt-dark mb-3">Canyoning Adventure</h3>
+                                <p class="text-slate-700 mb-4 flex-grow">An adrenaline-packed day of jumping, sliding, and abseiling down the pristine waterfalls and clear pools of Meghalaya.</p>
+                                <!-- UPDATED: bg-dt-green -->
+                                <button class="modal-open-btn mt-4 w-full text-center px-6 py-3 bg-dt-green text-white text-base font-semibold rounded-lg shadow-lg-soft hover:bg-opacity-90 transition duration-300" data-modal="booking" data-title="Canyoning Adventure">
+                                    Book This Trip
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =========== PAGE: Academy =========== --><div id="page-academy" class="page-content hidden">
+            
+            <!-- Academy Hero Section --><section class="hero-section hero-bg bg-academy-hero flex items-center justify-center text-center text-white relative" style="height: 60vh; min-height: 400px;">
+                <div class="absolute inset-0 bg-black opacity-60"></div> <!-- Dark overlay --><div class="relative z-10 p-6">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">
+                        Duia Trailblazers Academy
+                    </h1>
+                    <p class="text-xl md:text-2xl mt-4 font-light">Train. Lead. Explore.</p>
+                </div>
+            </section>
+            
+            <!-- About the Academy -->
+            <section class="py-20 md:py-28 bg-white">
+                <div class="container mx-auto px-6 lg:px-8 max-w-4xl text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-dt-dark mb-6">Our Mission</h2>
+                    <p class="text-lg md:text-xl text-slate-700 leading-relaxed">
+                        The Duia Trailblazers Academy is committed to setting the standard for outdoor leadership and safety in India. We provide aspiring guides, outdoor professionals, and enthusiasts with the practical skills and certifications needed to lead adventures responsibly and confidently.
+                    </p>
+                </div>
+            </section>
+            
+            <!-- Courses & Workshops Section -->
+            <section class="py-20 md:py-28 bg-dt-bg">
+                <div class="container mx-auto px-6 lg:px-8">
+                    <h2 class="text-3xl md:text-4xl font-bold text-dt-dark text-center mb-16">Courses & Workshops</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        
+                        <!-- Canyoning Course Card -->
+                        <div class="bg-white rounded-2xl shadow-xl-soft overflow-hidden flex flex-col">
+                            <img src="https://scontent.fdel29-1.fna.fbcdn.net/v/t1.6435-9/99280857_884690455276909_3561013069364592640_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_ohc=3fq89epZYHYQ7kNvwEx2yoY&_nc_oc=AdlXRwrkJ8JPSSZ2nGU9WyUtJs6gPrE_OdrnB_LHg85KwK-dwxY3r6jXGgE77FKC-Ws&_nc_zt=23&_nc_ht=scontent.fdel29-1.fna&_nc_gid=ypjUz-dVMKGSyTDFPHhhMw&oh=00_AfdWMxSkvG4PbvCd-7Q86APLZlq_n798r90YeW4J_W1EQw&oe=692AE2B9" alt="Canyoning Course" class="w-full h-56 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-bold text-dt-dark mb-3">Canyoning Course</h3>
+                                <p class="text-slate-700 mb-4 flex-grow">Master the techniques of canyon descent, from rope work and anchor systems to water safety and rescue.</p>
+                                <!-- UPDATED: bg-dt-blue -->
+                                <button class="modal-open-btn mt-4 w-full text-center px-6 py-3 bg-dt-blue text-white text-base font-semibold rounded-lg shadow-lg-soft hover:bg-opacity-90 transition duration-300" data-modal="enrolling" data-title="Canyoning Course">
+                                    Enroll Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Trek Leadership Card -->
+                        <div class="bg-white rounded-2xl shadow-xl-soft overflow-hidden flex flex-col">
+                            <img src="https://scontent.fdel29-1.fna.fbcdn.net/v/t1.6435-9/119489729_974858152926805_5241210231296450342_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=3a1ebe&_nc_ohc=r9NiXhxPXLUQ7kNvwHLN9M_&_nc_oc=Adl-6ujNgoHlfJbK99msC82UdjqaalKUB9w6lTPWAcyEpn0a_H-_tZxGSPJ1Ji6YxNw&_nc_zt=23&_nc_ht=scontent.fdel29-1.fna&_nc_gid=UR-jNk2_QLGbIgeUKe4aOg&oh=00_Afc-f_Qvi2z2sBuNJM_7UlUNbnuOkdBAXCjPiuSnlacG2g&oe=692B05CC" alt="Trek Leadership" class="w-full h-56 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-bold text-dt-dark mb-3">Trek Leadership</h3>
+                                <p class="text-slate-700 mb-4 flex-grow">Learn group management, advanced navigation, risk assessment, and emergency response for high-altitude treks.</p>
+                                <!-- UPDATED: bg-dt-blue -->
+                                <button class="modal-open-btn mt-4 w-full text-center px-6 py-3 bg-dt-blue text-white text-base font-semibold rounded-lg shadow-lg-soft hover:bg-opacity-90 transition duration-300" data-modal="enrolling" data-title="Trek Leadership Course">
+                                    Enroll Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- First Aid Card -->
+                        <div class="bg-white rounded-2xl shadow-xl-soft overflow-hidden flex flex-col">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-riEzvStWhV5iLIyrixEdRLkyw5l8oP03mw&s" alt="First Aid" class="w-full h-56 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-bold text-dt-dark mb-3">Wilderness First Aid</h3>
+                                <p class="text-slate-700 mb-4 flex-grow">Get certified in wilderness first aid and CPR, focusing on situation management in remote environments.</p>
+                                <!-- UPDATED: bg-dt-blue -->
+                                <button class="modal-open-btn mt-4 w-full text-center px-6 py-3 bg-dt-blue text-white text-base font-semibold rounded-lg shadow-lg-soft hover:bg-opacity-90 transition duration-3D00" data-modal="enrolling" data-title="Wilderness First Aid Course">
+                                    Enroll Now
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
+        
+        <!-- =========== PAGE: About =========== --><div id="page-about" class="page-content hidden">
+            <!-- About Hero Section --><section class="hero-section hero-bg bg-hero-pattern flex items-center justify-center text-center text-white relative" style="height: 60vh; min-height: 400px; background-position: center 40%;">
+                <div class="absolute inset-0 bg-black opacity-60"></div> <!-- Dark overlay --><div class="relative z-10 p-6">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">
+                        Our Story
+                    </h1>
+                </div>
+            </section>
+
+            <!-- Our Mission Section -->
+            <section class="py-20 md:py-28 bg-white">
+                <div class="container mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-dt-dark mb-6">Who We Are</h2>
+                        <p class="text-lg text-slate-700 leading-relaxed mb-4">
+                            Duia Trailblazers was born from a passion for the unexplored beauty of Meghalaya and a deep respect for its indigenous cultures. Our founder, Gerald Samuel Duia, envisioned a company that not only shared this magic with the world but also empowered the local communities and set a new standard for sustainable adventure.
+                        </p>
+                        <p class="text-lg text-slate-700 leading-relaxed">
+                            Today, we are a team of certified local guides, expert instructors, and travel enthusiasts dedicated to crafting authentic experiences. The Duia Trailblazers Academy is our commitment to building capacity, ensuring safety, and fostering the next generation of outdoor leaders.
+                        </d>
+                    </div>
+                    <div class="order-first md:order-last">
+                        <img src="https://scontent.fdel29-1.fna.fbcdn.net/v/t39.30808-6/478000395_2010902739322336_2038883820707003152_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_ohc=D7DFRxuPZ2sQ7kNvwHBoAgn&_nc_oc=Adnpfs93FLv180IebV0pSYz5m7-ME9FstLNYL2v4zWEjXhuGlBhBEr2s8umqjuozXkA&_nc_zt=23&_nc_ht=scontent.fdel29-1.fna&_nc_gid=LwHDB_WH7OmkYuPpCuSziA&oh=00_AffsGYYUGdPvcZNlj0qhVRf3JmuDHpb2HOZn27UGa2fPqg&oe=69093892" alt="Duia Trailblazers Team" class="rounded-2xl shadow-xl-soft w-full h-auto object-cover">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =========== PAGE: Contact =========== --><div id="page-contact" class="page-content hidden">
+            <section class="py-20 md:py-28 bg-white">
+                <div class="container mx-auto px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto">
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-dt-dark mb-4">Get In Touch</h1>
+                        <p class="text-lg md:text-xl text-slate-700 mb-12">
+                            Have a question about a trip, a course, or just want to say hello? We'd love to hear from you.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                        
+                        <!-- Contact Form -->
+                        <form id="contact-form" class="bg-dt-bg p-8 rounded-2xl shadow-xl-soft">
+                            <h3 class="text-2xl font-bold text-dt-dark mb-6">Send us a message</h3>
+                            <div class="space-y-5">
+                                <div>
+                                    <label for="contact-name" class="block text-base font-medium text-slate-700 mb-1.5">Name</label>
+                                    <input type="text" id="contact-name" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-dt-primary focus:ring-dt-primary text-base p-3" required>
+                                </div>
+                                <div>
+                                    <label for="contact-email" class="block text-base font-medium text-slate-700 mb-1.5">Email</label>
+                                    <input type="email" id="contact-email" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-dt-primary focus:ring-dt-primary text-base p-3" required>
+                                </div>
+                                <div>
+                                    <label for="contact-subject" class="block text-base font-medium text-slate-700 mb-1.5">Subject</label>
+                                    <select id="contact-subject" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-dt-primary focus:ring-dt-primary text-base p-3">
+                                        <option>Travel Booking Inquiry</option>
+                                        <option>Academy Enrollment Question</option>
+                                        <option>Partnership</option>
+                                        <option>General Question</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="contact-message" class="block text-base font-medium text-slate-700 mb-1.5">Message</label>
+                                    <textarea id="contact-message" rows="5" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-dt-primary focus:ring-dt-primary text-base p-3" required></textarea>
+                                </div>
+                                <div class="pt-2">
+                                    <!-- UPDATED: bg-dt-primary -->
+                                    <button type="button" id="submit-contact-form" class="w-full bg-dt-primary text-white font-bold py-3.5 px-6 rounded-lg shadow-lg-soft hover:bg-opacity-90 transition duration-300 text-base">
+                                        Send Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <!-- Contact Info --><div class="space-y-8">
+                            <div>
+                                <h3 class="text-2xl font-bold text-dt-dark mb-4">Contact Details</h3>
+                                <ul class="space-y-3 text-lg text-slate-700">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-phone fa-fw w-6 text-dt-primary"></i>
+                                        <span>+91 97743 65937</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-envelope fa-fw w-6 text-dt-primary"></i>
+                                        <span>contact@duiatrailblazers.com</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-map-marker-alt fa-fw w-6 text-dt-primary mt-1"></i>
+                                        <span>Shillong, Meghalaya, India</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-2xl font-bold text-dt-dark mb-4">Follow Us</h3>
+                                <div class="flex space-x-6 text-2xl text-slate-500">
+                                    <a href="https://www.facebook.com/duiatrailblazers/" target="_blank" rel="noopener noreferrer" class="hover:text-dt-primary transition duration-300"><i class="fab fa-facebook"></i></a>
+                                    <a href="https://www.instagram.com/duiatrailblazers/" target="_blank" rel="noopener noreferrer" class="hover:text-dt-primary transition duration-300"><i class="fab fa-instagram"></i></a>
+                                    <a href="https://www.youtube.com/@duiatrailblazers" target="_blank" rel="noopener noreferrer" class="hover:text-dt-primary transition duration-300"><i class="fab fa-youtube"></i></a>
+                                    <a href="https://www.linkedin.com/in/gerald-samuel-duia-283b27a1/" target="_blank" rel="noopener noreferrer" class="hover:text-dt-primary transition duration-300"><i class="fab fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Footer --><footer class="bg-dt-dark text-slate-300">
+        <div class="container mx-auto px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+                
+                <!-- Column 1: Brand --><div>
+                    <img src="https://scontent.fdel29-1.fna.fbcdn.net/v/t39.30808-6/305892691_502400808561742_5483379155533334371_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=OMorgqn3PngQ7kNvwHmYd6a&_nc_oc=Adn5HXp98piqf5k4nj8Fuzk7qVOWa_XA8yZD2kHoLJupu-KR_h3jigo93TIdpZYXJws&_nc_zt=23&_nc_ht=scontent.fdel29-1.fna&_nc_gid=5FafKHyTGHaJ3T_ow5Z2iQ&oh=00_AfdvNjIMKHSWKBgwGZBDtVzLekQM0BIR3Flya_B17rDdTg&oe=69095BEB" alt="Duia Trailblazers Logo" class="h-20 w-auto mb-4">
+                    <div class="flex space-x-4 mt-6">
+                        <a href="https://www.facebook.com/duiatrailblazers/" target="_blank" rel="noopener noreferrer" class="text-xl hover:text-white transition duration-300"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/duiatrailblazers/" target="_blank" rel="noopener noreferrer" class="text-xl hover:text-white transition duration-300"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@duiatrailblazers" target="_blank" rel="noopener noreferrer" class="text-xl hover:text-white transition duration-300"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.linkedin.com/in/gerald-samuel-duia-283b27a1/" target="_blank" rel="noopener noreferrer" class="text-xl hover:text-white transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Column 2: Quick Links --><div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Quick Links</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="nav-link hover:text-white transition duration-300" data-page="home">Home</a></li>
+                        <li><a href="#" class="nav-link hover:text-white transition duration-300" data-page="about">About Us</a></li>
+                        <li><a href="#" class="nav-link hover:text-white transition duration-300" data-page="contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Divisions --><div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Our Divisions</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="nav-link hover:text-white transition duration-300" data-page="travel">Travel Experiences</a></li>
+                        <li><a href="#" class="nav-link hover:text-white transition duration-300" data-page="academy">Academy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Chat on WhatsApp --><div>
+                    <h5 class="text-lg font-semibold text-white mb-4">Chat with Us</h5>
+                    <p class="mb-4">Have questions? Chat directly with our team.</p>
+                    <a href="httpsa://wa.me/919774365937?text=Hello%20Duia%20Trailblazers!%20I%20have%20a%20question." target="_blank" rel="noopener noreferrer" class="inline-block px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition duration-300">
+                        <i class="fab fa-whatsapp mr-2"></i> Chat on WhatsApp
+                    </a>
+                </div>
+
+            </div>
+            
+            <div class="border-t border-slate-700 mt-12 pt-8 text-center text-sm text-slate-400">
+                &copy; <span id="current-year"></span> Duia Trailblazers. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Inquiry Modal --><div id="inquiry-modal-backdrop" class="modal-backdrop">
+        <div id="inquiry-modal-content" class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modal-title" class="text-2xl font-bold text-dt-dark">Inquiry</h2>
+                <button id="modal-close-btn" class="text-2xl text-slate-500 hover:text-dt-dark">&times;</button>
+            </div>
+            
+            <form id="inquiry-form" class="space-y-4">
+                <input type="hidden" id="modal-inquiry-type">
+                <input type="hidden" id="modal-inquiry-title">
+                
+                <div>
+                    <label for="modal-name" class="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+                    <input type="text" id="modal-name" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-dt-primary focus:ring-dt-primary p-3" required>
+                </div>
+                <div>
+                    <label for="modal-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                    <input type="email" id="modal-email" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-dt-primary focus:ring-dt-primary p-3" required>
+                </div>
+                <div>
+                    <label for="modal-phone" class="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
+                    <input type="tel" id="modal-phone" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-dt-primary focus:ring-dt-primary p-3" required>
+                </div>
+                <div>
+                    <label for="modal-dates" class="block text-sm font-medium text-slate-700 mb-1">Preferred Date(s)</label>
+                    <input type="text" id="modal-dates" placeholder="e.g., 'Mid-July' or 'Oct 10-15'" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-dt-primary focus:ring-dt-primary p-3">
+                </div>
+                
+                <div class="pt-4">
+                    <!-- This button's color is now set dynamically by JS -->
+                    <button type="submit" id="modal-submit-btn" class="w-full bg-dt-primary text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-opacity-90 transition duration-300 text-lg">
+                        Submit Inquiry via WhatsApp
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const pages = document.querySelectorAll('.page-content');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuIcon = mobileMenuButton.querySelector('i');
+            const currentYear = document.getElementById('current-year');
+            
+            // Set current year in footer
+            if (currentYear) {
+                currentYear.textContent = new Date().getFullYear();
+            }
+
+            // Function to show a page
+            function showPage(pageId) {
+                // Hide all pages
+                pages.forEach(page => {
+                    if (!page.classList.contains('hidden')) {
+                        page.classList.add('hidden');
+                    }
+                });
+
+                // Show the target page
+                const targetPage = document.getElementById(`page-${pageId}`);
+                if (targetPage) {
+                    targetPage.classList.remove('hidden');
+                    window.scrollTo(0, 0); // Scroll to top
+                } else {
+                    // Fallback to home if page not found
+                    document.getElementById('page-home').classList.remove('hidden');
+                }
+
+                // Update active nav links
+                updateActiveNav(pageId);
+                
+                // Close mobile menu
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuIcon.classList.remove('fa-times');
+                    mobileMenuIcon.classList.add('fa-bars');
+                }
+            }
+
+            // Function to update active nav link state
+            function updateActiveNav(pageId) {
+                navLinks.forEach(link => {
+                    if (link.dataset.page === pageId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+
+            // Add click event listeners to all nav links
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = link.dataset.page;
+                    showPage(pageId);
+                });
+            });
+
+            // Toggle mobile menu
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                if (mobileMenu.classList.contains('hidden')) {
+                    mobileMenuIcon.classList.remove('fa-times');
+                    mobileMenuIcon.classList.add('fa-bars');
+                } else {
+                    mobileMenuIcon.classList.remove('fa-bars');
+                    mobileMenuIcon.classList.add('fa-times');
+                }
+            });
+
+            // --- Contact Form WhatsApp Logic ---
+            const contactFormButton = document.getElementById('submit-contact-form');
+            if (contactFormButton) {
+                contactFormButton.addEventListener('click', () => {
+                    const name = document.getElementById('contact-name').value;
+                    const email = document.getElementById('contact-email').value;
+                    const subject = document.getElementById('contact-subject').value;
+                    const message = document.getElementById('contact-message').value;
+                    const whatsappNumber = '919774365937';
+
+                    if (!name || !email || !message) {
+                        console.error('Missing required contact fields');
+                        return;
+                    }
+
+                    const whatsappMessage = `
+*New Contact Form Inquiry*
+*Name:* ${name}
+*Email:* ${email}
+*Subject:* ${subject}
+*Message:* ${message}
+                    `.trim();
+                    
+                    const encodedMessage = encodeURIComponent(whatsappMessage);
+                    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+                    
+                    window.open(whatsappURL, '_blank');
+                });
+            }
+
+            // --- Modal Logic ---
+            const modalBackdrop = document.getElementById('inquiry-modal-backdrop');
+            const modalContent = document.getElementById('inquiry-modal-content');
+            const modalOpenButtons = document.querySelectorAll('.modal-open-btn');
+            const modalCloseButton = document.getElementById('modal-close-btn');
+            const inquiryForm = document.getElementById('inquiry-form');
+            const modalTitle = document.getElementById('modal-title');
+            const modalSubmitBtn = document.getElementById('modal-submit-btn'); // Get the submit button
+            
+            const modalInquiryType = document.getElementById('modal-inquiry-type');
+            const modalInquiryTitle = document.getElementById('modal-inquiry-title');
+            
+            const modalName = document.getElementById('modal-name');
+            const modalEmail = document.getElementById('modal-email');
+            const modalPhone = document.getElementById('modal-phone');
+            const modalDates = document.getElementById('modal-dates');
+            
+            const whatsappNumber = '919774365937';
+
+            function openModal(e) {
+                const btn = e.currentTarget;
+                const modalType = btn.dataset.modal; // 'booking' or 'enrolling'
+                const inquiryTitle = btn.dataset.title; // e.g., 'The Ryndia Trail'
+
+                // Reset button color
+                // UPDATED: Use new color classes
+                modalSubmitBtn.classList.remove('bg-dt-green', 'bg-dt-blue', 'bg-dt-primary');
+
+                // Set modal titles and hidden fields
+                if (modalType === 'booking') {
+                    modalTitle.textContent = `Book Your Trip: ${inquiryTitle}`;
+                    modalInquiryType.value = 'Trip Booking';
+                    modalSubmitBtn.classList.add('bg-dt-green'); // UPDATED: Set button color to new green
+                } else {
+                    modalTitle.textContent = `Enroll in Course: ${inquiryTitle}`;
+                    modalInquiryType.value = 'Course Enrollment';
+                    modalSubmitBtn.classList.add('bg-dt-blue'); // UPDATED: Set button color to new blue
+                }
+                modalInquiryTitle.value = inquiryTitle;
+                
+                // Reset form
+                inquiryForm.reset();
+                
+                // Show modal
+                modalBackdrop.classList.add('active');
+            }
+            
+            function closeModal() {
+                modalBackdrop.classList.remove('active');
+            }
+
+            modalOpenButtons.forEach(btn => {
+                btn.addEventListener('click', openModal);
+            });
+            
+            modalCloseButton.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', (e) => {
+                if (e.target === modalBackdrop) {
+                    closeModal();
+                }
+            });
+
+            // Handle Modal Form Submission
+            inquiryForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Collect data
+                const type = modalInquiryType.value;
+                const title = modalInquiryTitle.value;
+                const name = modalName.value;
+                const email = modalEmail.value;
+                const phone = modalPhone.value;
+                const dates = modalDates.value;
+
+                // Simple validation
+                if (!name || !email || !phone) {
+                    console.error('Missing required modal fields');
+                    return;
+                }
+
+                // Create WhatsApp message
+                const whatsappMessage = `
+*New ${type} Inquiry*
+*Item:* ${title}
+---------------------
+*Name:* ${name}
+*Email:* ${email}
+*Phone:* ${phone}
+*Preferred Dates:* ${dates || 'Not specified'}
+                `.trim();
+                
+                const encodedMessage = encodeURIComponent(whatsappMessage);
+                const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+                
+                // Open WhatsApp
+                window.open(whatsappURL, '_blank');
+                
+                // Close modal
+                closeModal();
+            });
+
+            // Initialize the app by showing the home page
+            showPage('home');
+
+        });
+    </script>
+
+</body>
+</html>
+
